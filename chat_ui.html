@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
+        html {
+            background: red;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: transparent;
+        }
+
         body {
-            background: #fff;
+            background: transparent;
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
         }
+
         /* Floating chat button */
         .chat-fab {
             position: fixed;
@@ -23,7 +32,7 @@
             height: 64px;
             background: #0056b3;
             border-radius: 50%;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -31,35 +40,49 @@
             z-index: 1001;
             transition: background 0.2s;
         }
+
         .chat-fab:hover {
             background: #007fff;
         }
+
         .chat-fab img {
             width: 36px;
             height: 36px;
         }
-        /* Chat widget popup */
+
         .chat-widget {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            width: 370px;
-            max-width: 98vw;
-            height: 540px;
-            max-height: 90vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
             background: #fff;
             border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             z-index: 1002;
-            animation: fadeInUp 0.25s;
+            margin: 0;
+            padding: 0;
         }
+
+
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .chat-header {
             background: #0056b3;
             color: #fff;
@@ -72,6 +95,7 @@
             gap: 10px;
             position: relative;
         }
+
         .chat-header img {
             width: 32px;
             height: 32px;
@@ -79,11 +103,13 @@
             background: #fff;
             object-fit: cover;
         }
+
         .chat-header .chat-actions {
             margin-left: auto;
             display: flex;
             gap: 8px;
         }
+
         .chat-header button {
             background: transparent;
             border: none;
@@ -94,9 +120,11 @@
             border-radius: 6px;
             transition: background 0.15s;
         }
+
         .chat-header button:hover {
-            background: rgba(255,255,255,0.13);
+            background: rgba(255, 255, 255, 0.13);
         }
+
         .chat-messages {
             flex: 1;
             padding: 24px 8px;
@@ -106,17 +134,21 @@
             flex-direction: column;
             gap: 18px;
         }
+
         .message {
             display: flex;
             align-items: flex-end;
             width: 100%;
         }
+
         .message.user {
             justify-content: flex-end;
         }
+
         .message.bot {
             justify-content: flex-start;
         }
+
         .message.user .bubble {
             background: linear-gradient(135deg, #0056b3 60%, #007fff 100%);
             color: #fff;
@@ -124,11 +156,12 @@
             margin-left: 80px;
             margin-right: 0;
             text-align: right;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             align-self: flex-end;
             border: 1px solid #0056b3;
             max-width: 80%;
         }
+
         .message.bot .bubble {
             background: #e3f0ff;
             color: #222;
@@ -136,11 +169,12 @@
             margin-right: 80px;
             margin-left: 0;
             text-align: left;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             align-self: flex-start;
             border: 1px solid #b3d1f7;
             max-width: 80%;
         }
+
         .bubble {
             padding: 12px 18px;
             font-size: 1rem;
@@ -148,27 +182,32 @@
             position: relative;
             display: inline-block;
         }
+
         .avatar {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             background: #fff;
             object-fit: cover;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
             margin-right: 10px;
         }
+
         .message.user .avatar {
             display: none;
         }
+
         .message.bot .avatar {
             display: block;
         }
+
         .chat-input {
             display: flex;
             padding: 18px 18px;
             background: #f1f5fb;
             border-top: 1px solid #e3e3e3;
         }
+
         .chat-input input {
             flex: 1;
             padding: 12px 16px;
@@ -176,9 +215,10 @@
             border-radius: 12px;
             font-size: 1rem;
             background: #fff;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
             outline: none;
         }
+
         .chat-input button {
             margin-left: 12px;
             padding: 12px 22px;
@@ -191,9 +231,11 @@
             cursor: pointer;
             transition: background 0.2s;
         }
+
         .chat-input button:active {
             background: #003d80;
         }
+
         @media (max-width: 600px) {
             .chat-widget {
                 width: 98vw;
@@ -202,41 +244,67 @@
                 bottom: 1vw;
                 border-radius: 10px;
             }
+
             .chat-header {
                 font-size: 1.1rem;
                 padding: 14px 10px;
             }
+
             .chat-messages {
                 padding: 12px 2px;
             }
+
             .message.user .bubble {
                 margin-left: 30px;
                 max-width: 90%;
             }
+
             .message.bot .bubble {
                 margin-right: 30px;
                 max-width: 90%;
             }
+
             .chat-input {
                 padding: 12px;
             }
         }
+
         /* Markdown styling for bot replies */
-        .bubble :is(h1, h2, h3, h4, h5, h6) { margin: 0.5em 0 0.2em 0; font-weight: 700; }
-        .bubble ul, .bubble ol { margin: 0.5em 0 0.5em 1.2em; }
-        .bubble pre { background: #e0e7ef; padding: 8px 12px; border-radius: 8px; overflow-x: auto; }
-        .bubble code { background: #e0e7ef; padding: 2px 6px; border-radius: 4px; font-size: 0.95em; }
-        .bubble a { color: #0056b3; text-decoration: underline; }
+        .bubble :is(h1, h2, h3, h4, h5, h6) {
+            margin: 0.5em 0 0.2em 0;
+            font-weight: 700;
+        }
+
+        .bubble ul,
+        .bubble ol {
+            margin: 0.5em 0 0.5em 1.2em;
+        }
+
+        .bubble pre {
+            background: #e0e7ef;
+            padding: 8px 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .bubble code {
+            background: #e0e7ef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .bubble a {
+            color: #0056b3;
+            text-decoration: underline;
+        }
     </style>
 </head>
+
 <body>
-    <Center><h1>Chat Bot Demo</h1></Center>
     <!-- Floating Chat Button -->
-    <div class="chat-fab" id="chat-fab" title="Chat with Bubby">
-        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="Chat with Bubby">
-    </div>
     <!-- Chat Widget Popup -->
-    <div class="chat-widget" id="chat-widget" style="display:none;">
+    <div class="chat-widget" id="chat-widget" style="display:flex;">
         <div class="chat-header">
             <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="Bubby bot icon">
             Bubby
@@ -248,7 +316,8 @@
         <div class="chat-messages" id="chat-messages">
             <div class="message bot">
                 <img class="avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="Bubby">
-                <div class="bubble">Hi! 👋 I'm <b>Bubby</b>, your friendly virtual assistant. How can I help you with this website today?</div>
+                <div class="bubble">Hi! 👋 I'm <b>Bubby</b>, your friendly virtual assistant. How can I help you with
+                    this website today?</div>
             </div>
         </div>
         <form class="chat-input" id="chat-form" autocomplete="off">
@@ -257,7 +326,6 @@
         </form>
     </div>
     <script>
-        const chatFab = document.getElementById('chat-fab');
         const chatWidget = document.getElementById('chat-widget');
         const closeChat = document.getElementById('close-chat');
         const reloadChat = document.getElementById('reload-chat');
@@ -265,16 +333,15 @@
         const chatForm = document.getElementById('chat-form');
         const userInput = document.getElementById('user-input');
 
-        // Open chat widget
-        chatFab.onclick = () => {
-            chatWidget.style.display = 'flex';
-            chatFab.style.display = 'none';
-            setTimeout(() => { userInput.focus(); }, 200);
-        };
-        // Close chat widget
+        // Always show chat widget, hide floating button
+        // Remove floating button logic entirely
         closeChat.onclick = () => {
-            chatWidget.style.display = 'none';
-            chatFab.style.display = 'flex';
+            // If embedded in an iframe, notify parent to close the iframe
+            if (window.parent !== window) {
+                window.parent.postMessage({ type: 'bubby-close' }, '*');
+            } else {
+                chatWidget.style.display = 'none';
+            }
         };
         // Reload chat (clear messages)
         reloadChat.onclick = () => {
@@ -333,4 +400,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>
