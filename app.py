@@ -23,13 +23,13 @@ def chat():
 
     # Prepare prompt for Gemini
     prompt = f"""
-You are Bubby, your friendly virtual assistant to help with this website. Answer the user's question based ONLY on the following context. If the answer is not in the context, politely say you don't know.
+You are Mira, a helpful assistant bot for Medha Tech Pvt Ltd. Answer the user's question based ONLY on the following context. If the answer is not in the context, politely say you don't know.
 
 Context:
 {DATA_CONTEXT}
 
 User: {user_message}
-Bubby:"""
+Mira:"""
 
     payload = {
         "contents": [
@@ -53,5 +53,5 @@ def send_static(path):
     return send_from_directory('static', path)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5001)
     
